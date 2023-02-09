@@ -1,6 +1,6 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { productsInit } from './controllers/products.controller';
+import { productsInit } from './src/controllers/products.controller';
 var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
