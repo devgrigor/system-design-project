@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.allowAllMiddleware = void 0;
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const products_controller_1 = require("./controllers/products.controller");
+const products_controller_1 = require("./src/controllers/products.controller");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 const config = dotenv_1.default.config().parsed;

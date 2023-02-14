@@ -9,7 +9,7 @@ export const ProductList = () => {
 
         console.log(postFetchObj);
 
-        fetch(configs.apiUrl + '/products/list', postFetchObj)
+        fetch(configs.apiUrl + '/product/list', postFetchObj)
             .then((res) => {
                 console.log(res);
                 return res.json();
@@ -23,7 +23,7 @@ export const ProductList = () => {
     const purchase = (product: any) => {
         postFetchObj.body = JSON.stringify({ ...product });
 
-        fetch(configs.apiUrl + '/products/purchase', postFetchObj)
+        fetch(configs.apiUrl + '/product/purchase', postFetchObj)
             .then((res) => {
                 return res.json();
             })
