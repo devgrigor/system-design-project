@@ -36,3 +36,12 @@ services:
             - ./doc:/usr/share/nginx/html/doc
         environment:
             API_URL: doc/openapi.yaml
+
+    api:
+        container_name: api
+        image: api
+        build:
+            context: .
+            dockerfile: api.Dockerfile
+        ports:
+            - '8000:8000'
