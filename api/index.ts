@@ -1,6 +1,7 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { productsInit } from './src/controllers/products.controller';
+import { userInit } from './src/controllers/user.controller';
 var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
@@ -24,6 +25,7 @@ app.use(allowAllMiddleware);
 app.use(jsonParser);
 
 productsInit(app);
+userInit(app);
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

@@ -1,5 +1,9 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { getProductRepository } from '../redis-entity/product';
+import { Repository } from 'redis-om';
+import { getOrderRepository } from '../redis-entity/order';
+import { getUserData } from '../helpers/user.helper';
 
 const products = [
     { id: 1, name: 'something' },
@@ -15,18 +19,37 @@ export const productsInit = (app: Express) => {
         res.json(products);
     });
 
-    app.route('/product/purchase').post((req: Request, res: Response) => {
+    app.route('/product/purchase').post(async (req: Request, res: Response) => {
         console.log('purchase of the product', req.body);
+
+        const repo = await getOrderRepository();
+        const orderEntity = repo.createEntity();
+
+        orderEntity.product = req.body.productId;
+        orderEntity.user = getUserData(req).id;
+
+        repo.save(orderEntity);
 
         res.json({ success: true });
     });
 
-    app.route('/product/add').post((req: Request, res: Response) => {
-        products.push({
-            id: products[products.length - 1].id + 1,
-            name: req.body.name,
-        });
+    app.route('/orders/list').post(async (req: Request, res: Response) => {
+        console.log('purchase of the product', req.body);
 
-        res.json(products[products.length - 1]);
+        const repo = await getOrderRepository();
+        const result = await repo.search().returnAll();
+
+        res.json(result);
+    });
+
+    app.route('/product/add').post(async (req: Request, res: Response) => {
+        const repo = await getProductRepository();
+        const productEntity = repo.createEntity();
+
+        productEntity.name = req.body.name;
+        repo.save(productEntity);
+        const result = await repo.search().returnAll();
+
+        res.json(result);
     });
 };

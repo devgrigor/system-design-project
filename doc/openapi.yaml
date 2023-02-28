@@ -4,6 +4,35 @@ servers:
     - url: http://localhost:8000
 
 paths:
+    /user:
+        post:
+            summary: Add one user.
+            description: Adding user
+            requestBody:
+                description: New user, email and password
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                            required:
+                                - email
+                                - password
+            responses:
+                '200':
+                    description: A JSON user added to db
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+
     /product/list:
         post:
             summary: Returns a list of products.
@@ -31,6 +60,32 @@ paths:
                             type: object
                             properties:
                                 name:
+                                    type: string
+                            required:
+                                - name
+            responses:
+                '200':
+                    description: A JSON array of product names
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+
+    /product/purchase:
+        post:
+            summary: Add one product.
+            description: Adding product
+            requestBody:
+                description: New product, just the name
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
                                     type: string
                             required:
                                 - name
