@@ -9,7 +9,11 @@ var jsonParser = bodyParser.json();
 const config: any = dotenv.config().parsed;
 console.log(config);
 const app: Express = express();
-const port = config.PORT;
+let portArg = process.argv.find((flag) => {
+    return flag.indexOf('port') > -1;
+});
+portArg = portArg && portArg.split('=')[1];
+const port = portArg || config.PORT;
 
 export const allowAllMiddleware = (
     req: Request,

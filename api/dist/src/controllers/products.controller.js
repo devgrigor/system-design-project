@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productsInit = void 0;
 const product_1 = require("../redis-entity/product");
+const order_1 = require("../redis-entity/order");
+const user_helper_1 = require("../helpers/user.helper");
 const products = [
     { id: 1, name: 'something' },
     { id: 2, name: 'something' },
@@ -22,15 +24,25 @@ const productsInit = (app) => {
         console.log('getting list of products');
         res.json(products);
     });
-    app.route('/product/purchase').post((req, res) => {
+    app.route('/product/purchase').post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log('purchase of the product', req.body);
+        const repo = yield (0, order_1.getOrderRepository)();
+        const orderEntity = repo.createEntity();
+        orderEntity.product = req.body.productId;
+        orderEntity.user = (0, user_helper_1.getUserData)(req).id;
+        repo.save(orderEntity);
         res.json({ success: true });
-    });
+    }));
+    app.route('/orders/list').get((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log('purchase of the product', req.body);
+        // const repo = await getOrderRepository();
+        // const result = await repo.search().returnAll();
+        res.json({ test: Date.now() });
+    }));
     app.route('/product/add').post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const repo = yield (0, product_1.getProductRepository)();
         const productEntity = repo.createEntity();
         productEntity.name = req.body.name;
-        console.log('getting here');
         repo.save(productEntity);
         const result = yield repo.search().returnAll();
         res.json(result);

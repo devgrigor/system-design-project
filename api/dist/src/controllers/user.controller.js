@@ -36,9 +36,9 @@ exports.userInit = void 0;
 const db_configs_1 = require("../../db-configs");
 const User_1 = require("../entity/User");
 const crypto = __importStar(require("crypto"));
+const jwt = __importStar(require("jsonwebtoken"));
 const userInit = (app) => {
     app.route('/user').post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log('got here');
         // TODO: add user record
         const repository = db_configs_1.dataSource.getRepository(User_1.User);
         const user = new User_1.User();
@@ -69,6 +69,10 @@ const userInit = (app) => {
             });
             return;
         }
+        const token = jwt.sign({
+            email: user.email,
+        }, 'test');
+        user.token = token;
         res.json(user);
     }));
 };

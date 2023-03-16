@@ -7,7 +7,7 @@ exports.dataSource = new typeorm_1.DataSource({
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: '',
+    password: 'asdasd',
     database: 'test',
     entities: ['./src/entity/*.js'],
     logging: true,

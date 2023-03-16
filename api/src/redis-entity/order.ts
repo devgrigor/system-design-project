@@ -1,16 +1,16 @@
 import { Client, Entity, Schema } from 'redis-om';
 
-export class Visit extends Entity {
+export class Order extends Entity {
     product: string;
     user: string;
 }
 
-const schema = new Schema(Visit, {
+const schema = new Schema(Order, {
     product: { type: 'string' },
     user: { type: 'string' },
 });
 
-export const getVisitRepository = async () => {
+export const getOrderRepository = async () => {
     const client = new Client();
     // TODO: later get this from environment
     await client.open('redis://localhost:7000');

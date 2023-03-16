@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getVisitRepository = exports.Visit = void 0;
+exports.getOrderRepository = exports.Order = void 0;
 const redis_om_1 = require("redis-om");
-class Visit extends redis_om_1.Entity {
+class Order extends redis_om_1.Entity {
 }
-exports.Visit = Visit;
-const schema = new redis_om_1.Schema(Visit, {
+exports.Order = Order;
+const schema = new redis_om_1.Schema(Order, {
     product: { type: 'string' },
     user: { type: 'string' },
 });
-const getVisitRepository = () => __awaiter(void 0, void 0, void 0, function* () {
+const getOrderRepository = () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new redis_om_1.Client();
     // TODO: later get this from environment
     yield client.open('redis://localhost:7000');
     // @ts-ignore
     return client.fetchRepository(schema);
 });
-exports.getVisitRepository = getVisitRepository;
+exports.getOrderRepository = getOrderRepository;

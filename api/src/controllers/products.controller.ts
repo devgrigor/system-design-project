@@ -1,7 +1,5 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
 import { getProductRepository } from '../redis-entity/product';
-import { Repository } from 'redis-om';
 import { getOrderRepository } from '../redis-entity/order';
 import { getUserData } from '../helpers/user.helper';
 
@@ -33,13 +31,13 @@ export const productsInit = (app: Express) => {
         res.json({ success: true });
     });
 
-    app.route('/orders/list').post(async (req: Request, res: Response) => {
+    app.route('/orders/list').get(async (req: Request, res: Response) => {
         console.log('purchase of the product', req.body);
 
-        const repo = await getOrderRepository();
-        const result = await repo.search().returnAll();
+        // const repo = await getOrderRepository();
+        // const result = await repo.search().returnAll();
 
-        res.json(result);
+        res.json({ test: Date.now() });
     });
 
     app.route('/product/add').post(async (req: Request, res: Response) => {

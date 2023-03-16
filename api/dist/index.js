@@ -13,7 +13,11 @@ var jsonParser = bodyParser.json();
 const config = dotenv_1.default.config().parsed;
 console.log(config);
 const app = (0, express_1.default)();
-const port = config.PORT;
+let portArg = process.argv.find((flag) => {
+    return flag.indexOf('port') > -1;
+});
+portArg = portArg && portArg.split('=')[1];
+const port = portArg || config.PORT;
 const allowAllMiddleware = (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
