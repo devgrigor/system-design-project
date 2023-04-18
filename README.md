@@ -2,23 +2,26 @@
 
 ## Parts of the application
 
-Application has the following parts:
+Application has the following parts. Each of which is now separated to a single microservice i.e. docker container with separate `compose` file.
 
 -   nginx (for port forwarding and load balancing and serving static files)
--   nodejs/express server for the api
--   react application for the building the static files
--   docker for containerization of all parts
--   some database in the future
--   maybe a storage like `minio` in the future
+    This is for the web app also load balancing. `docker-compose.web-yml`
+-   nodejs/express server for the api. `docker-compose.api.yml`
+
+-   swagger documentation for the above api. Also separate docker file just for testing purposes `docker-compose.docs.yml`
+
+-   Sql database for user data `docker-compose.db.yml`
+
+-   NoSQL database: redis for product info. Also used as a cache `docker-compose.cache.yml`
 
 ## Running the project
 
 For deployment on server cloning the repo and running `docker compose up -d` is quite enough.
 For development:
 
--   `docker compose up` for starting all containers. This starts api and runs nginx for the build of the website
+-   `docker compose up -f docker-compose.${service}.yml` for starting each service separately.
 
-Note: each part of the project will have it's own **README.md**
+Note: each part of the project can be fully separated to another repo and deployed in different environment. Slight additional configuration will be required in that case.
 
 ### For testing check following urls
 
